@@ -1,5 +1,5 @@
 soong_namespace {
-    imports: ["vendor/qcom/opensource/display-commonsys-intf/sm8150"],
+    imports: ["vendor/qcom/opensource/display-commonsys-intf"],
 }
 
 cc_defaults {
