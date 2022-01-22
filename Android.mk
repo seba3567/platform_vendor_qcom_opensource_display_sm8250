@@ -13,7 +13,7 @@ display-hals += \
     libmemtrack \
     hdmi_cec \
     libhistogram \
-    drm.vendor
+    drm.vendor \
     gpu_tonemapper \
     libdrmutils
 endif
