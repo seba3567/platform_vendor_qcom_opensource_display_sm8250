@@ -1,3 +1,7 @@
+ifeq ($(BOARD_DISPLAY_HAL),)
+    BOARD_DISPLAY_HAL := hardware/qcom/display
+endif
+
 # Display product definitions
 PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@3.0-impl-qti-display \
@@ -17,6 +21,8 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.display.mapper@2.0.vendor \
     vendor.qti.hardware.display.mapper@3.0.vendor \
     vendor.qti.hardware.display.mapper@4.0.vendor \
+    init.qti.display_boot.sh \
+    init.qti.display_boot.rc \
     modetest
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -36,9 +42,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.display.enable_posted_start_dyn=1 \
     vendor.display.enable_optimize_refresh=1 \
     vendor.display.use_smooth_motion=1 \
+    vendor.display.enable_camera_smooth=1 \
+    vendor.display.enable_allow_idle_fallback=1 \
+    vendor.display.disable_idle_time_video=1 \
+    vendor.display.disable_idle_time_hdr=1
 
-# Enable offline rotator for Bengal.
-ifneq ($(TARGET_BOARD_PLATFORM),bengal)
+# Enable offline rotator for Bengal, Monaco, Khaje.
+ifneq ($(filter bengal monaco khaje, $(TARGET_BOARD_PLATFORM)),$(TARGET_BOARD_PLATFORM))
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.display.disable_offline_rotator=1
 else
@@ -53,6 +63,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.high_fps_late_sf_phase_offset_ns=-5000000 \
     debug.sf.high_fps_early_phase_offset_ns=-5000000 \
     debug.sf.high_fps_early_gl_phase_offset_ns=-5000000
+endif
+
+ifeq ($(TARGET_BOARD_PLATFORM),monaco)
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.display.disable_layer_stitch=1
 endif
 
 ifeq ($(TARGET_BOARD_PLATFORM),kona)
@@ -73,6 +88,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.perf_fps_early_phase_offset_ns=-5000000 \
     debug.sf.perf_fps_early_gl_phase_offset_ns=-5000000 \
     debug.sf.enable_advanced_sf_phase_offset=1
+endif
+
+ifeq ($(TARGET_FWK_SUPPORTS_FULL_VALUEADDS), true)
+  ifeq ($(TARGET_BOARD_PLATFORM),lito)
+  PRODUCT_PROPERTY_OVERRIDES += \
+      vendor.display.enable_perf_hint_large_comp_cycle=1
+  endif
 endif
 
 #Set WCG properties

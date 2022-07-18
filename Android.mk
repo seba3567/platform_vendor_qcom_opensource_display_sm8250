@@ -21,6 +21,7 @@ endif
 display-hals += gralloc
 display-hals += sde-drm
 display-hals += composer
+display-hals += init
 
 include $(call all-named-subdir-makefiles,$(display-hals))
 
