@@ -1,4 +1,4 @@
-ifneq ($(filter 4.19, $(KERNEL_VERSION)),)
+ifneq ($(filter 4.19, $(TARGET_KERNEL_VERSION)),)
 
 display-hals := \
     include\
