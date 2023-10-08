@@ -1,5 +1,5 @@
 soong_namespace {
-    imports: ["vendor/qcom/opensource/display-commonsys-intf"],
+    imports: ["vendor/qcom/opensource/commonsys-intf/display"],
 }
 
 cc_defaults {
